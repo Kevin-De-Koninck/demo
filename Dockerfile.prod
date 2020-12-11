@@ -1,0 +1,38 @@
+# The builder image contains all required pip packages
+FROM debian:buster-slim AS builder
+COPY requirements.txt /requirements.txt
+RUN apt-get update && apt-get install -y --no-install-recommends --yes python3-venv gcc libpython3-dev && \
+    python3 -m venv /venv && \
+    /venv/bin/pip install --upgrade pip && \
+    /venv/bin/pip install -r /requirements.txt
+
+# Copy the entire repository and run all pytests in the tester image
+FROM builder AS tester
+COPY . /app
+WORKDIR /app
+#START_TESTS_MARKER
+COPY requirements_tests.txt /requirements_tests.txt
+RUN /venv/bin/pip install -r /requirements_tests.txt
+RUN echo "\033[0;34m\n*** RUNNING PYTEST NOW...\033[0m\n"
+RUN /venv/bin/pytest
+RUN echo "\033[0;34m\n*** RUNNING PYLINT NOW...\033[0m\n"
+RUN /venv/bin/pylint --rcfile=setup.cfg /app/template/
+RUN echo "\033[0;34m\n*** RUNNING FLAKE8 NOW...\033[0m\n"
+RUN /venv/bin/flake8
+RUN echo "\033[0;34m\n*** RUNNING BANDIT NOW...\033[0m\n"
+RUN /venv/bin/bandit -r --ini setup.cfg
+#END_TESTS_MARKER
+
+# From our base image, copy the artifacts from previous stages (virtual env and app)
+FROM gcr.io/distroless/python3-debian10 AS runner
+COPY --from=builder /venv /venv
+COPY --from=tester /app/template /app/template
+#ENVIRONMENT_VARS
+#EXPOSED_PORTS
+WORKDIR /app
+ENTRYPOINT ["/venv/bin/python3", "-m", "template"]
+# Best practice: never run as root
+USER 1001
+LABEL name={NAME}
+LABEL version={VERSION}
+
