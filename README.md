@@ -1,29 +1,18 @@
-![Build and tests](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Build%20and%20tests/badge.svg)
-![Push Docker container](https://github.com/Kevin-De-Koninck/python-project-template/workflows/Push%20Docker%20container/badge.svg)
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/33686856d8577095210f/maintainability)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/33686856d8577095210f/test_coverage)](https://codeclimate.com/github/Kevin-De-Koninck/python-project-template/test_coverage)
+# python-project-demo
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=coverage)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Kevin-De-Koninck_python-project-template&metric=security_rating)](https://sonarcloud.io/dashboard?id=Kevin-De-Koninck_python-project-template)
-
-
-# python-project-template
-
-This repository can be used as a template for starting every Python project you'll ever make. The code will run inside a Docker container along with all tests. This makes sure that the requirements for the host development machine are minimal:
+This repository can be used as a demo for starting every Python project you'll ever make. The code will run inside a Docker container along with all tests. This makes sure that the requirements for the host development machine are minimal:
 
 - Docker
 - Bash
 
 This project makes use of SonarCloud (and optionally CodeClimate) for the test coverage visualisation and the code quality checks.
 
-The following sections explain how a new user can set up it's project, after forking this template on github.
+The following sections explain how a new user can set up it's project, after forking this demo on github.
 
 # Table of Contents
 
-- [Initializing the template](#initializing-the-template)
+- [Initializing the demo](#initializing-the-demo)
   * [Create a GitHub Access Token](#create-a-github-access-token)
     + [Create a repository secret for the GitHub token](#create-a-repository-secret-for-the-github-token)
   * [Setup SonarCloud](#setup-sonarcloud)
@@ -40,9 +29,9 @@ The following sections explain how a new user can set up it's project, after for
   * [Add tests](#add-tests)
   * [Environment variables, port mappings and volume mappings](#environment-variables--port-mappings-and-volume-mappings)
   * [tags](#tags)
-  * [Updating the template](#updating-the-template)
+  * [Updating the demo](#updating-the-demo)
 
-# Initializing the template
+# Initializing the demo
 
 ## Create a GitHub Access Token
 
@@ -74,7 +63,7 @@ https://github.com/OWNER/REPOSITORY/packages
 ```
 In this case, it would be:
 ```
-https://github.com/kevin-de-koninck/python-project-template/packages
+https://github.com/kevin-de-koninck/python-project-demo/packages
 ```
 
 ### Create a repository secret for the GitHub token
@@ -116,7 +105,7 @@ We don't want to save the login token as plain text in our repository. For this,
 
 ## (optional) Setup CodeClimate
 
-This is optional, since SonarCloud does the same things and more. To remove CodeClimate from the project, remove the following code from the `.github/workflows/build-test.yml` [file](https://github.com/Kevin-De-Koninck/python-project-template/blob/master/.github/workflows/build-test.yml#L66-L72):
+This is optional, since SonarCloud does the same things and more. To remove CodeClimate from the project, remove the following code from the `.github/workflows/build-test.yml` [file](https://github.com/Kevin-De-Koninck/python-project-demo/blob/master/.github/workflows/build-test.yml#L66-L72):
 
 ``` yaml
     - name: Send report to CodeClimate
@@ -176,7 +165,7 @@ git push
 git push origin --tags
 ```
 
-If everything was successfull, you'll now have succeeding tests on [Github Actions](https://github.com/Kevin-De-Koninck/python-project-template/actions) and a Docker container image available on the [Docker registry](https://github.com/Kevin-De-Koninck/python-project-template/packages).
+If everything was successfull, you'll now have succeeding tests on [Github Actions](https://github.com/Kevin-De-Koninck/python-project-demo/actions) and a Docker container image available on the [Docker registry](https://github.com/Kevin-De-Koninck/python-project-demo/packages).
 
 ## Badges on the README.md file
 
@@ -202,7 +191,7 @@ The `configure.sh` script cannot change the badges on the top of the `README.md`
 
 # Usage
 
-After initializing the project, it's time to use the project. The template provides 2 helper scripts:
+After initializing the project, it's time to use the project. The demo provides 2 helper scripts:
 
 - `build.sh`
 - `run.sh`
@@ -252,7 +241,7 @@ After building (and testing) the Docker container, the container image will be a
 
 ## Add dependencies
 
-To add python dependencies (pip), this template provide 2 files:
+To add python dependencies (pip), this demo provide 2 files:
 
 - `requirements.txt`: Add all your pip dependencies here that the Python project uses.
 - `requirements_tests.txt`: Add all your pip dependencies here that the test framework requires, bu is not needed to run the Python code.
@@ -270,7 +259,7 @@ Tests are run with pytest and can be modified/added under the directory 'tests'.
 The `config.ini` file can be used to set custom environment variables, mount points and port exposure inside the container. The following snippit of `config.ini` will:
 
 - expose port 8000 inside the container and when we run the container with `run.sh` hostport 12345 will be mapped to port 8000 inside the container.
-- Create a mount point '/app/template/extras' and when we run the container with `run.sh` host volume /Users/kevin/extras will be mounted inside the container.
+- Create a mount point '/app/demo/extras' and when we run the container with `run.sh` host volume /Users/kevin/extras will be mounted inside the container.
 - Envirment variable 'TEST_ENV' will be set containing the value 'test' inside the container.
 
 ``` ini
@@ -278,7 +267,7 @@ The `config.ini` file can be used to set custom environment variables, mount poi
 TEST_ENV=test
 
 [VOLUME_MAPS]
-/Users/kevin/extras=/app/template/extras
+/Users/kevin/extras=/app/demo/extras
 
 [PORT_MAPS]
 12345=8000
@@ -293,22 +282,22 @@ git tag -a v0.0.2 -m "First draft for Github action 'push'"
 git push origin --tags
 ```
 
-## Updating the template
+## Updating the demo
 
-If it is required to pull new updates made to the template repository, use the following method:
+If it is required to pull new updates made to the demo repository, use the following method:
 
 ``` bash
-# Add the remote, call it template
-git remote add template https://github.com/Kevin-De-Koninck/python-project-template.git
+# Add the remote, call it demo
+git remote add demo https://github.com/Kevin-De-Koninck/python-project-demo.git
 
 # Get everyting from the remote
-git fetch template
+git fetch demo
 
 Make sure that you're on your master branch
 git checkout master
 
-# Rewrite your master branch so that any commits of yours that aren't already in template/master are replayed on top of that other branch
-git rebase template/master
+# Rewrite your master branch so that any commits of yours that aren't already in demo/master are replayed on top of that other branch
+git rebase demo/master
 
 # Fix any rebase issues
 
@@ -316,6 +305,6 @@ git rebase template/master
 git push --force-with-lease origin master
 
 # Remove the remote again
-git remote remove template
+git remote remove demo
 ```
 

@@ -3,8 +3,8 @@
 ####################################################################################
 
 # Project info
-MODULE="template"
-REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-template"
+MODULE="demo"
+REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-demo"
 
 # Image and tag
 IMAGE="${REGISTRY}/${MODULE}"

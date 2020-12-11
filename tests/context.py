@@ -1,2 +1,2 @@
-from template import Template  # noqa # pylint: disable=unused-import, wrong-import-position
+from demo import Demo  # noqa # pylint: disable=unused-import, wrong-import-position
 

@@ -8,9 +8,9 @@ source ./common_functions.sh
 # Old and new variables
 # ---------------------------------------------------------------------------------------------
 # Original names
-OLD_MODULE_NAME_LOWER_CASE='template'
-OLD_MODULE_NAME_CAPITALIZED='Template'
-OLD_REPO_NAME="python-project-template"
+OLD_MODULE_NAME_LOWER_CASE='demo'
+OLD_MODULE_NAME_CAPITALIZED='Demo'
+OLD_REPO_NAME="python-project-demo"
 OLD_REPO_OWNER="kevin-de-koninck"
 OLD_GITHUB_TOKEN_FILE="/Users/kevin/GH_TOKEN.txt"
 

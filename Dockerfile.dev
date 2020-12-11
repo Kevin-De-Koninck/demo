@@ -24,7 +24,7 @@ RUN /venv/bin/pip install -r /requirements_tests.txt
 RUN echo "\033[0;34m\n*** RUNNING PYTEST NOW...\033[0m\n"
 RUN /venv/bin/pytest
 RUN echo "\033[0;34m\n*** RUNNING PYLINT NOW...\033[0m\n"
-RUN /venv/bin/pylint --rcfile=setup.cfg /app/template/
+RUN /venv/bin/pylint --rcfile=setup.cfg /app/demo/
 RUN echo "\033[0;34m\n*** RUNNING FLAKE8 NOW...\033[0m\n"
 RUN /venv/bin/flake8
 RUN echo "\033[0;34m\n*** RUNNING BANDIT NOW...\033[0m\n"
@@ -34,12 +34,12 @@ RUN /venv/bin/bandit -r --ini setup.cfg
 # From our base image, copy the artifacts from previous stages (virtual env and app)
 FROM base AS runner
 COPY --from=builder /venv /venv
-COPY --from=tester /app/template /app/template
+COPY --from=tester /app/demo /app/demo
 #ENVIRONMENT_VARS
 #EXPOSED_PORTS
 ENV PATH=/venv/bin/:${PATH}
 WORKDIR /app
-ENTRYPOINT ["/venv/bin/python3", "-m", "template"]
+ENTRYPOINT ["/venv/bin/python3", "-m", "demo"]
 # Run as root for development
 USER 0
 LABEL name={NAME}
