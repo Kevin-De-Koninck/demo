@@ -25,7 +25,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Build the production container and skip all tests
-      run: ./build.sh --project prod --skip-tests
+      run: ./build.sh --project prod
   
   # This workflow contains 3 jobs called "build_dev_with_tests", "build_prod_no_tests" and "test_code_quality"
   build_dev_with_tests:
