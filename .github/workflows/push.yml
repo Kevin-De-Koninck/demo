@@ -3,7 +3,7 @@ name: Push Docker container
 on:
   push:
     tags:
-    - '*'
+      - '*'
 
 jobs:
   push:
