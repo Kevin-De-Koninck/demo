@@ -9,7 +9,6 @@ source ./common_functions.sh
 VERSION="0.0.0"
 
 # Other vars
-SKIP_TESTS=False
 PUSH_TO_REGISTRY=False
 CLEAN=False
 PROJECT="UNDEFINED"
@@ -20,7 +19,7 @@ PROJECT="UNDEFINED"
 
 help () {
   cat << EOF
-./build.sh -p PROJECT [-v VERSION] [-u] [-s] [-c]
+./build.sh -p PROJECT [-v VERSION] [-u] [-c]
 
 Required arguments:
     -p|--project PROJECT           The project to be build (dev/prod)
@@ -28,7 +27,6 @@ Required arguments:
 Optional arguments:
     -v|--version VERSION           Overwrite the version of the prod container
     -u|--upload                    Push the build to the GitHub registry
-    -s|--skip-tests                Build the project but disable the tests
     -c|--clean                     Remove all local docker images of our builds
     -h|--help                      Show this message
 
@@ -80,21 +78,11 @@ build (){
   print_info "    Name:     ${MODULE}"
   print_info "    Version:  ${VERSION}"
 
-  if [[ "${SKIP_TESTS}" == "True" ]]; then
-    print_info "Skipping tests during build..."
-    sed -e "s|{NAME}|${MODULE}|g" \
-        -e "s|{VERSION}|${VERSION}|g" \
-        -e "s|#ENVIRONMENT_VARS|${ENV_CMD}|g" \
-        -e "s|#EXPOSED_PORTS|${EXPOSE_CMD}|g" \
-        -e '/#START_TESTS_MARKER/,/#END_TESTS_MARKER/d' \
-        Dockerfile.${BUILD_PROJECT} | docker build -t ${IMAGE}:${VERSION} -f- .
-  else
-    sed -e "s|{NAME}|${MODULE}|g" \
-        -e "s|{VERSION}|${VERSION}|g" \
-        -e "s|#ENVIRONMENT_VARS|${ENV_CMD}|g" \
-        -e "s|#EXPOSED_PORTS|${EXPOSE_CMD}|g" \
-        Dockerfile.${BUILD_PROJECT} | docker build -t ${IMAGE}:${VERSION} -f- .
-  fi
+  sed -e "s|{NAME}|${MODULE}|g" \
+      -e "s|{VERSION}|${VERSION}|g" \
+      -e "s|#ENVIRONMENT_VARS|${ENV_CMD}|g" \
+      -e "s|#EXPOSED_PORTS|${EXPOSE_CMD}|g" \
+      Dockerfile.${BUILD_PROJECT} | docker build -t ${IMAGE}:${VERSION} -f- .
 
   # Push the image to the registry if required.
   if [[ "${PUSH_TO_REGISTRY}" == "True" ]]; then
@@ -116,10 +104,6 @@ while [[ $# -gt 0 ]]; do
       PROJECT="${2}"
       shift # past argument
       shift # past value
-      ;;
-    -s|--skip-tests)
-      SKIP_TESTS=True
-      shift # past argument
       ;;
     -u|--upload)
       PUSH_TO_REGISTRY=True

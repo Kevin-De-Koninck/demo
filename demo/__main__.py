@@ -1,42 +1,38 @@
-"""
-Documentation
+import os
 
-Some handy texts
-"""
-
-import argparse
+from flask import Flask, jsonify
+from flask_cors import CORS
 from logzero import logger
-from .app.app import Demo
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
+def create_app(config=None):
+    app = Flask(__name__)
 
-    parser.add_argument("-p", "--port",
-                        action="store", type=int,
-                        help="Required positional argument")
-    parser.add_argument("-f", "--flag",
-                        action="store_true", default=False,
-                        help="Optional argument flag which defaults to False")
-    parser.add_argument("-n", "--name",
-                        action="store",
-                        help="Optional argument which requires a parameter (ei.g.: -n test)")
-    parser.add_argument("-v", "--verbose",
-                        action="count", default=0,
-                        help="Optional verbosity counter (-v, -vv, etc)")
+    # See http://flask.pocoo.org/docs/latest/config/
+    app.config.update(dict(DEBUG=True))
+    app.config.update(config or {})
 
-    return parser.parse_args()
+    # Setup cors headers to allow all domains
+    # https://flask-cors.readthedocs.io/en/latest/
+    CORS(app)
+
+    # Definition of the routes. Put them into their own file. See also
+    # Flask Blueprints: http://flask.pocoo.org/docs/latest/blueprints
+    @app.route("/")
+    def hello_world():
+        logger.info("/")
+        return "Hello World"
+
+    @app.route("/foo/<someId>")
+    def foo_url_arg(someId):
+        logger.info("/foo/%s", someId)
+        return jsonify({"echo": someId})
+
+    return app
 
 
-if __name__ == '__main__':
-    args = parse_args()
-    logger.info("Argument -p|--port: %s", args.port)
-    logger.info("Argument -f|--flag: %s", args.flag)
-    logger.info("Argument -n|--name: %s", args.name)
-    if args.verbose:
-        logger.info("Argument -v|-vv|-vvv: %s", args.verbose)
-
-    demo = Demo()
-    demo.inc()
-    logger.debug("The value now is '%s'", demo.value)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    app = create_app()
+    app.run(host="0.0.0.0", port=port)
 

@@ -1,5 +1,5 @@
 
-# python-project-demo
+# demo
 
 This repository can be used as a demo for starting every Python project you'll ever make. The code will run inside a Docker container along with all tests. This makes sure that the requirements for the host development machine are minimal:
 
@@ -63,7 +63,7 @@ https://github.com/OWNER/REPOSITORY/packages
 ```
 In this case, it would be:
 ```
-https://github.com/kevin-de-koninck/python-project-demo/packages
+https://github.com/kevin-de-koninck/demo/packages
 ```
 
 ### Create a repository secret for the GitHub token
@@ -105,7 +105,7 @@ We don't want to save the login token as plain text in our repository. For this,
 
 ## (optional) Setup CodeClimate
 
-This is optional, since SonarCloud does the same things and more. To remove CodeClimate from the project, remove the following code from the `.github/workflows/build-test.yml` [file](https://github.com/Kevin-De-Koninck/python-project-demo/blob/master/.github/workflows/build-test.yml#L66-L72):
+This is optional, since SonarCloud does the same things and more. To remove CodeClimate from the project, remove the following code from the `.github/workflows/build-test.yml` [file](https://github.com/Kevin-De-Koninck/demo/blob/master/.github/workflows/build-test.yml#L66-L72):
 
 ``` yaml
     - name: Send report to CodeClimate
@@ -165,7 +165,7 @@ git push
 git push origin --tags
 ```
 
-If everything was successfull, you'll now have succeeding tests on [Github Actions](https://github.com/Kevin-De-Koninck/python-project-demo/actions) and a Docker container image available on the [Docker registry](https://github.com/Kevin-De-Koninck/python-project-demo/packages).
+If everything was successfull, you'll now have succeeding tests on [Github Actions](https://github.com/Kevin-De-Koninck/demo/actions) and a Docker container image available on the [Docker registry](https://github.com/Kevin-De-Koninck/demo/packages).
 
 ## Badges on the README.md file
 
@@ -288,7 +288,7 @@ If it is required to pull new updates made to the demo repository, use the follo
 
 ``` bash
 # Add the remote, call it demo
-git remote add demo https://github.com/Kevin-De-Koninck/python-project-demo.git
+git remote add demo https://github.com/Kevin-De-Koninck/demo.git
 
 # Get everyting from the remote
 git fetch demo

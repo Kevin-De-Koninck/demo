@@ -4,7 +4,7 @@
 
 # Project info
 MODULE="demo"
-REGISTRY="docker.pkg.github.com/kevin-de-koninck/python-project-demo"
+REGISTRY="docker.pkg.github.com/kevin-de-koninck/demo"
 
 # Image and tag
 IMAGE="${REGISTRY}/${MODULE}"
