@@ -1,5 +1,4 @@
 # demo
-
 ## Create a GitHub Access Token
 
 To be able to push the Docker container image to the Docker registry on GitHub, we'll need to create a GitHub Access Token:
